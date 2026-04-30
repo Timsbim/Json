@@ -122,4 +122,30 @@ impl Json {
             _ => None
         }
     }
+
+    // Simple builder
+    
+    pub fn new_array() -> Self {
+        Self::Array(Vec::new())
+    }
+
+    pub fn new_object() -> Self {
+        Self::Object(Map::new())
+    }
+
+    pub fn push(self, item: Json) -> Self {
+        let Json::Array(mut array) = self else {
+            return self;
+        };
+        array.push(item);
+        Json::Array(array)
+    }
+
+    pub fn insert(self, key: &str, value: Json) -> Self {
+        let Json::Object(mut object) = self else {
+            return self;
+        };
+        object.insert(key.to_string(), value);
+        Json::Object(object)
+    }
 }
